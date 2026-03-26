@@ -1,8 +1,7 @@
-// Configuración de API - Usa localhost:5000 por defecto para desarrollo local
-// Si accedes por 127.0.0.1, se ajustará automáticamente
+// Configuración de API
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? `http://${window.location.hostname}:5000` 
-    : "http://localhost:5000"; // Fallback por defecto
+    : "https://dragon-norteno-backend.onrender.com"; // URL detectada en tu Render Backend
 
 console.log("Sistema de Pedidos: Conectando a API en:", API_URL);
 

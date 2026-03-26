@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragón Norteño | Sistema de Pedidos Premium</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="auth-container">
+        <!-- View: Branch Selection -->
+        <section id="view-sucursal" class="view active">
+            <div class="auth-card">
+                <i class="fas fa-dragon auth-logo"></i>
+                <h2>Selecciona tu Sucursal</h2>
+                <div id="sucursales-list" class="sucursales-grid">
+                    <!-- Sucursales populate here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Login -->
+        <section id="view-login" class="view">
+            <div class="auth-card">
+                <button class="btn-back" id="btn-back-sucursal"><i class="fas fa-arrow-left"></i></button>
+                <i class="fas fa-user-circle auth-logo"></i>
+                <h2 id="login-branch-name">Acceso al Sistema</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" placeholder="Usuario" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Contraseña" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Ingresar</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div class="app-container hidden" id="main-app">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-dragon logo-icon"></i>
+                <div class="logo-text">DRAGÓN <br><span>NORTEÑO</span></div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-view="menu" id="nav-menu">
+                    <i class="fas fa-utensils"></i>
+                    <span>Carta</span>
+                </li>
+                <li class="nav-item" data-view="orders" id="nav-orders">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Pedidos</span>
+                </li>
+                <li class="nav-item" data-view="sales" id="nav-sales">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Ventas Hoy</span>
+                </li>
+            </ul>
+            <div class="user-info">
+                <p id="user-display">Mesero 1</p>
+                <button id="btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Loading Indicator -->
+            <div id="loader" class="loader-overlay hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- View: Menu -->
+            <section id="view-menu" class="view active">
+                <header class="view-header">
+                    <div class="header-main">
+                        <h1>Arma tu Pedido</h1>
+                        <p>Selecciona una mesa y los platillos favoritos</p>
+                    </div>
+                    <div class="mesa-selector">
+                        <label>Mesa:</label>
+                        <select id="select-mesa">
+                            <option value="">Seleccionar...</option>
+                            <!-- Mesas are populated dynamically -->
+                        </select>
+                    </div>
+                </header>
+
+                <div class="categories-strip" id="categories-container">
+                    <!-- Categories go here -->
+                </div>
+
+                <div class="products-grid" id="products-container">
+                    <!-- Products filtered by category go here -->
+                </div>
+            </section>
+
+            <!-- View: Orders -->
+            <section id="view-orders" class="view">
+                <header class="view-header">
+                    <h1>Pedidos en Curso</h1>
+                </header>
+                <div class="orders-list" id="orders-container">
+                    <!-- Active orders cards go here -->
+                </div>
+            </section>
+
+            <!-- View: Sales -->
+            <section id="view-sales" class="view">
+                <header class="view-header">
+                    <h1>Reporte de Ventas Hoy</h1>
+                </header>
+                <div class="sales-summary" id="sales-container">
+                    <!-- Sales report goes here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Floating Cart -->
+        <div class="floating-cart" id="cart-drawer">
+            <div class="cart-header">
+                <h3>Resumen del Pedido</h3>
+                <button id="close-cart"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Items in cart go here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Mesa selecionada:</span>
+                    <span id="cart-mesa-display">Ninguna</span>
+                </div>
+                <button id="btn-enviar-pedido" class="btn-primary">Enviar a Cocina</button>
+            </div>
+        </div>
+
+        <button class="cart-toggle" id="open-cart">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-badge" id="cart-count">0</span>
+        </button>
+    </div>
+
+    <!-- Notification system -->
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>

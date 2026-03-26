@@ -1,0 +1,17 @@
+{
+  "name": "Dragón Norteño - Sistema de Pedidos",
+  "short_name": "Dragón Norteño",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#8B0000",
+  "theme_color": "#FFD700",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3170/3170733.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "orientation": "portrait"
+}

@@ -39,12 +39,35 @@ const btnEnviarPedido = document.getElementById('btn-enviar-pedido');
 const ordersContainer = document.getElementById('orders-container');
 const salesContainer = document.getElementById('sales-container');
 
+function setupCategoriesScroll() {
+    const strip = document.getElementById('categories-container');
+    const arrow = document.getElementById('scroll-right');
+    
+    if (arrow) {
+        arrow.onclick = () => {
+            strip.scrollBy({ left: 200, behavior: 'smooth' });
+        };
+        
+        // Ocultar si al inicio no hay scroll
+        strip.onscroll = () => {
+            if (strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 10) {
+                arrow.style.opacity = '0';
+                arrow.style.pointerEvents = 'none';
+            } else {
+                arrow.style.opacity = '1';
+                arrow.style.pointerEvents = 'auto';
+            }
+        };
+    }
+}
+
 // Init
 window.addEventListener('DOMContentLoaded', () => {
     checkSession();
     setupAuthListeners();
     setupNavigation();
     setupCartActions();
+    setupCategoriesScroll();
 });
 
 // --- AUTH LOGIC ---

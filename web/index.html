@@ -171,7 +171,19 @@
     <script src="app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+                .then(reg => {
+                    // Chequear actualizaciones del SW en cada visita
+                    reg.update();
+                    console.log('SW registrado correctamente');
+                })
+                .catch(err => console.error('Error registrando SW:', err));
+
+            // Si hay un nuevo SW controlando, recargar la página
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('Nuevo SW detectado, recargando...');
+                window.location.reload();
+            });
         }
     </script>
 </body>

@@ -46,6 +46,18 @@
     </div>
 
     <div class="app-container hidden" id="main-app">
+        <!-- Mobile Top Bar (solo visible en celular) -->
+        <header class="mobile-topbar">
+            <div class="mobile-topbar-brand">
+                <i class="fas fa-dragon"></i>
+                <span>Dragón Norteño</span>
+            </div>
+            <div class="mobile-topbar-actions">
+                <span id="user-display-mobile"></span>
+                <button id="btn-logout-mobile"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </header>
+
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="logo">
@@ -71,6 +83,7 @@
                 <button id="btn-logout"><i class="fas fa-sign-out-alt"></i> Salir</button>
             </div>
         </nav>
+
 
         <!-- Main Content -->
         <main class="content">

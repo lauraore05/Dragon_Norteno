@@ -91,18 +91,32 @@ function checkSession() {
     }
 }
 
-async function fetchSucursales() {
+async function fetchSucursales(retries = 2) {
     showLoader(true);
     console.log("Intentando cargar sucursales desde:", `${API_URL}/sucursales`);
     try {
-        const res = await fetch(`${API_URL}/sucursales`);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+        
+        const res = await fetch(`${API_URL}/sucursales`, {
+            signal: controller.signal,
+            headers: { 'Accept': 'application/json' }
+        });
+        clearTimeout(timeoutId);
+        
         if (!res.ok) throw new Error(`Status: ${res.status}`);
         const data = await res.json();
         console.log("Sucursales cargadas:", data);
         renderSucursales(data);
     } catch (err) {
         console.error("Error cargando sucursales:", err);
-        showToast("Error conectando con el servidor. ¿Iniciaste el backend en Python?", "error");
+        if (retries > 0) {
+            console.log(`Reintentando... (${retries} intentos restantes)`);
+            showToast("Conectando con el servidor...", "error");
+            setTimeout(() => fetchSucursales(retries - 1), 3000);
+            return;
+        }
+        showToast("Error conectando con el servidor. Verifica tu conexión.", "error");
     } finally {
         showLoader(false);
     }
@@ -164,12 +178,27 @@ function setupAuthListeners() {
         localStorage.clear();
         location.reload();
     };
+
+    // Mobile logout
+    const btnLogoutMobile = document.getElementById('btn-logout-mobile');
+    if (btnLogoutMobile) {
+        btnLogoutMobile.onclick = () => {
+            localStorage.clear();
+            location.reload();
+        };
+    }
 }
 
 function showMainApp() {
     authContainer.classList.add('hidden');
     mainApp.classList.remove('hidden');
     userDisplay.textContent = `${currentUser.username} (${currentUser.rol})`;
+    
+    // Mobile topbar user display
+    const mobileUserDisplay = document.getElementById('user-display-mobile');
+    if (mobileUserDisplay) {
+        mobileUserDisplay.textContent = `${currentUser.username} (${currentUser.rol})`;
+    }
     
     // Role based restrictions
     if (currentUser.rol === 'mesero') {

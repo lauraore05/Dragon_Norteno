@@ -1,4 +1,11 @@
-const API_URL = "http://localhost:5000";
+// Configuración de API - Usa localhost:5000 por defecto para desarrollo local
+// Si accedes por 127.0.0.1, se ajustará automáticamente
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? `http://${window.location.hostname}:5000` 
+    : "http://localhost:5000"; // Fallback por defecto
+
+console.log("Sistema de Pedidos: Conectando a API en:", API_URL);
+
 
 // State
 let currentUser = null;
@@ -87,12 +94,16 @@ function checkSession() {
 
 async function fetchSucursales() {
     showLoader(true);
+    console.log("Intentando cargar sucursales desde:", `${API_URL}/sucursales`);
     try {
         const res = await fetch(`${API_URL}/sucursales`);
+        if (!res.ok) throw new Error(`Status: ${res.status}`);
         const data = await res.json();
+        console.log("Sucursales cargadas:", data);
         renderSucursales(data);
     } catch (err) {
-        showToast("Error cargando sucursales", "error");
+        console.error("Error cargando sucursales:", err);
+        showToast("Error conectando con el servidor. ¿Iniciaste el backend en Python?", "error");
     } finally {
         showLoader(false);
     }

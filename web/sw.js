@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dragon-norteño-v1';
+const CACHE_NAME = 'dragon-norteño-v2';
 const ASSETS = [
   './',
   './index.html',

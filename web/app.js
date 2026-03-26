@@ -1,7 +1,7 @@
 // Configuración de API
 const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? `http://${window.location.hostname}:5000` 
-    : "https://dragon-norteno-backend.onrender.com"; // URL detectada en tu Render Backend
+    : "https://dragon-nortenio.onrender.com"; // URL detectada en tu Render Backend
 
 console.log("Sistema de Pedidos: Conectando a API en:", API_URL);
 

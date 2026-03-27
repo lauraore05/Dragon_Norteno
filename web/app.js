@@ -372,17 +372,25 @@ function renderOrders(orders) {
     if (orders.length === 0) { ordersContainer.innerHTML = '<p class="text-muted">Sin pedidos.</p>'; return; }
     orders.forEach(o => {
         const card = document.createElement('div');
-        card.className = 'order-card';
+        card.className = `order-card status-${o.estado}`;
         const itemsList = o.items.map(i => `<li>${i.cantidad}x ${i.producto}</li>`).join('');
         const mesaNum = mesas.find(m => m.id_mesa == o.id_mesa)?.numero || o.id_mesa;
         
         card.innerHTML = `
-            <div class="order-card-header"><strong>Mesa ${mesaNum}</strong><span class="order-status status-${o.estado}">${o.estado}</span></div>
+            <div class="order-card-header">
+                <strong>Mesa ${mesaNum}</strong>
+                <span class="order-status status-${o.estado}">${o.estado === 'servido' ? 'SERVIDO' : 'PENDIENTE'}</span>
+            </div>
             <ul class="order-items">${itemsList}</ul>
             <div class="order-actions">
-                ${(currentUser.rol === 'admin' || currentUser.rol === 'cocina') && o.estado === 'pendiente' ? `<button onclick="updateStatus(${o.id_pedido}, 'servido')" class="btn-action">Servido</button>` : ''}
-                ${(currentUser.rol === 'admin' || currentUser.rol === 'mesero') && o.estado === 'servido' ? `<button onclick="updateStatus(${o.id_pedido}, 'pagado')" class="btn-action">Pagado</button>` : ''}
-                ${currentUser.rol === 'admin' ? `<button onclick="eliminarPedido(${o.id_pedido})" class="btn-delete"><i class="fas fa-trash"></i></button>` : ''}
+                ${(currentUser.rol === 'admin' || currentUser.rol === 'cocina') && o.estado === 'pendiente' ? 
+                    `<button onclick="updateStatus(${o.id_pedido}, 'servido')" class="btn-action">Marcar Servido</button>` : ''}
+                
+                ${o.estado === 'servido' ? 
+                    `<span class="order-finished-label"><i class="fas fa-check-circle"></i> Listo</span>` : ''}
+
+                ${currentUser.rol === 'admin' ? 
+                    `<button onclick="eliminarPedido(${o.id_pedido})" class="btn-delete"><i class="fas fa-trash"></i></button>` : ''}
             </div>
         `;
         ordersContainer.appendChild(card);

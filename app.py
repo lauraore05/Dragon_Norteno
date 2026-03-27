@@ -155,7 +155,7 @@ def actualizar_estado(id):
         )
         row = cur.fetchone()
         
-        if nuevo_estado in ['pagado', 'cancelado']:
+        if nuevo_estado in ['servido', 'pagado', 'cancelado']:
             if row:
                 cur.execute("UPDATE mesa SET estado = 'libre' WHERE id_mesa = %s AND id_sucursal = %s", 
                            (row['id_mesa'], row['id_sucursal']))

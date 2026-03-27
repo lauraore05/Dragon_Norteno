@@ -420,11 +420,44 @@ body {
 }
 
 .status-pendiente { background: #555; color: #fff; }
-.status-servido { background: #4caf50; color: #fff; }
-.status-pagado { background: var(--accent); color: var(--primary); }
+.order-card.status-servido {
+    background: linear-gradient(145deg, #0a3d0a 0%, #1b4d1b 100%);
+    border-color: #2e7d32;
+    box-shadow: 0 8px 16px rgba(0, 50, 0, 0.4);
+}
 
-.order-items { list-style: none; margin-bottom: 1.5rem; }
-.order-items li { font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--text-muted); }
+.order-card.status-servido .order-card-header {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.order-card.status-servido .order-status.status-servido {
+    background: #fff;
+    color: #1b4d1b;
+}
+
+.order-card.status-servido .order-items li {
+    color: #ddd;
+}
+
+.order-card.status-servido strong {
+    color: #fff;
+}
+
+.order-finished-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.order-finished-label i {
+    color: var(--accent);
+}
 
 /* Sales Table */
 .sales-summary {
